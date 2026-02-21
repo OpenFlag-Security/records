@@ -1,0 +1,29 @@
+name: OFV Validator & Auto-Merge
+on:
+  pull_request:
+    paths:
+      - '2026/*.json'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate JSON Schema
+        uses: ajinabraham/json-schema-validator-action@v1.0.1
+        with:
+          schema: ./schema.json
+          json_dir: ./2026/
+
+      - name: Check for PoC Link
+        run: |
+          # Un script simple que busca que el campo 'proof_of_concept' no esté vacío
+          if jq -e '.proof_of_concept == ""' 2026/*.json; then
+            echo "Error: Se requiere una Prueba de Concepto (PoC)"
+            exit 1
+          fi
+
+      - name: Auto-Approve for Trusted Contributors
+        if: github.event.pull_request.author_association == 'MEMBER' || github.event.pull_request.author_association == 'OWNER'
+        uses: hmarr/auto-approve-action@v4
