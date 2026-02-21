@@ -1,0 +1,17 @@
+{
+  "id": "OFV-2026-0000",
+  "modified": "2026-02-21T10:00:00Z",
+  "published": "2026-02-21T10:00:00Z",
+  "summary": "Breve descripción del fallo",
+  "details": "Explicación técnica extendida aquí.",
+  "affected": [
+    {
+      "package": { "name": "lib", "ecosystem": "npm" },
+      "ranges": [{ "type": "SEMVER", "events": [{ "introduced": "0" }, { "fixed": "1.2.3" }] }]
+    }
+  ],
+  "database_specific": {
+    "severity": "HIGH",
+    "reporter": "github_username"
+  }
+}
